@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yakoyo | Livescore</title>
+
+    {% load static %}
+
+    <link rel="stylesheet" href="{% static 'style.css'%}">
+</head>
+<body>
+    <div>
+        <ul>
+            <li><a href="">Basketball</a></li>
+            <li><a href="">Ice Hockey</a></li>
+            <li><a href="">Cricket</a></li>
+            <li><a href="">Tennis</a></li>
+            <li><a href="">Table Tennis</a></li>
+            <li><a href="">Handball</a></li>
+            <li><a href="">Volleyball</a></li>
+            <li><a href="">Rugby</a></li>
+            <li><a href="">Baseball</a></li>
+            <li><a href="{% url 'contact' %}">Contact</a></li>
+        </ul>
+    </div>
+
+    {% if jsonResponse.error %}
+    <div style="margin: 100px;">Sorry there no matches today</div>
+    {% else %}
+
+    {% for result in jsonResponse %}
+
+    <div class="container">
+        <div class="app" style="height: 120px;">
+            <div class="header" style="padding-top: 10px;">
+                <span class="team team-left">
+                    <img src="{{ result.team_home_badge }}" style="width: 20px;"/>
+                    <span class="name">{{ result.match_hometeam_name }}</span>
+                </span>
+                <span class="score">  {{ result.match_hometeam_score }} - {{ result.match_awayteam_score }}</span>
+                <span class="team team-right">
+                    <img src="{{ result.team_away_badge }}" style="width: 20px;"/>
+                    <span class="name">{{ result.match_awayteam_name }}</span>
+                    
+                </span>
+                <div style="clear:both; width: 100; text-align: center; font-size: 15px; margin-top: 80px;"> League: {{result.league_name }}
+                    <div style="width: 100%; text-align: center; font-size: 15px;"> Country: {{ result.country_name }}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+    {% endif %}
+    
+</body>
+</html>
